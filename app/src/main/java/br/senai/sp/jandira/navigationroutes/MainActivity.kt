@@ -4,9 +4,11 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.animation.AnimatedContentScope
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.expandVertically
+import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.scaleIn
 import androidx.compose.animation.shrinkHorizontally
@@ -50,8 +52,12 @@ class MainActivity : ComponentActivity() {
                             slideOutOfContainer(
                                 AnimatedContentScope.SlideDirection.End, tween(1000)
                             )
-                        }, enterTransition = { expandVertically(tween(2000)) }) {
-                        composable(route = "login") { login(navController) }
+                        }) {
+                        composable(route = "login") {
+                            AnimatedVisibility(visible = true, enter = fadeIn(), exit = fadeOut()) {
+                                login(navController)
+                            }
+                        }
                         composable(route = "menu") { menu(navController) }
                         composable(route = "perfil") { perfil(navController) }
                         composable(route = "pedidos") { pedidos(navController) }
